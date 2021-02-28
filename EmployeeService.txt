@@ -1,0 +1,274 @@
+*****************UC-1*****************************
+
+MySQL Shell 8.0.23
+
+Copyright (c) 2016, 2021, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > sql
+ReferenceError: sql is not defined
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect root@localhost:3306
+Creating a session to 'root@localhost:3306'
+Fetching schema names for autocompletion... Press ^C to stop.
+Your MySQL connection id is 9
+Server version: 8.0.23 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show database
+                               -> ^C
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employee           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| student            |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.0065 sec)
+ MySQL  localhost:3306 ssl  SQL > CREATE DATABASE payroll_service;
+Query OK, 1 row affected (0.0911 sec)
+ MySQL  localhost:3306 ssl  SQL > USE payroll_service;
+Default schema set to `payroll_service`.
+Fetching table and column names from `payroll_service` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  payroll_service  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employee           |
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sakila             |
+| student            |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.0024 sec)
+ 
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT DATABASE();
++-----------------+
+| DATABASE()      |
++-----------------+
+| payroll_service |
++-----------------+
+1 row in set (0.0004 sec)
+
+
+*********************************UC-2**********************************************
+
+MySQL  localhost:3306 ssl  payroll_service  SQL > CREATE TABLE employee_payroll
+                                                -> (
+                                                -> id INT unsigned NOT NULL AUTO_INCREMET,
+                                                -> name VARCHAR(150) NOT NULL,
+                                                -> salary Double NOT NULL,
+                                                -> start DATE NOT NULL,
+                                                -> PRIMARY KEY  (id)
+                                                -> );
+
+ MySQL  localhost:3306 ssl  payroll_service  SQL > CREATE TABLE employee_payroll
+						 ( id INT unsigned NOT NULL AUTO_INCREMENT, name VARCHAR(150) NOT NULL, salary Double NOT NULL, start DATE NOT NULL, PRIMARY KEY  (id) );
+Query OK, 0 rows affected (0.1719 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > DESCRIBE employee_payroll;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int unsigned | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(150) | NO   |     | NULL    |                |
+| salary | double       | NO   |     | NULL    |                |
+| start  | date         | NO   |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+4 rows in set (0.0336 sec)
+
+
+******************************************UC-3***********************************************
+
+ MySQL  localhost:3306 ssl  payroll_service  SQL > INSERT INTO employee_payroll (name, salary, start) v                                     INSERT INTO employee_payroll (name, salary, start) VALUES                                INSERT INTO employee_payroll (name, salary, start) VALUES
+                                                -> ('Sharad', 1000000.00, '2018-01-25' ),
+                                                -> ('Hitendra', 200000.00, '2019-11-26' ),
+                                                -> ('Jitndra', 3000000.00, '2020-06-30 ');
+Query OK, 3 rows affected (0.0489 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+*********************************************UC-4***********************************
+
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT * FROM employee_payroll;
++----+----------+---------+------------+
+| id | name     | salary  | start      |
++----+----------+---------+------------+
+|  1 | Sharad   | 1000000 | 2018-01-25 |
+|  2 | Hitendra |  200000 | 2019-11-26 |
+|  3 | Jitndra  | 3000000 | 2020-06-30 |
++----+----------+---------+------------+
+3 rows in set (0.0102 sec)
+
+**************************************UC-5******************************************************
+
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT * FROM employee_payroll
+                                                -> WHERE start BETWEEN CAST('2018-01-25'AS DATE) AND DATE(NOW());
++----+----------+---------+------------+
+| id | name     | salary  | start      |
++----+----------+---------+------------+
+|  1 | Sharad   | 1000000 | 2018-01-25 |
+|  2 | Hitendra |  200000 | 2019-11-26 |
+|  3 | Jitndra  | 3000000 | 2020-06-30 |
++----+----------+---------+------------+
+3 rows in set (0.0066 sec)
+
+**********************************UC-6****************************************************
+
+ MySQL  localhost:3306 ssl  payroll_service  SQL > ALTER TABLE employee_payroll ADD gender CHAR(1) AFTER name;
+Query OK, 0 rows affected (0.2997 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  payroll_service  SQL > discribe employee_payroll;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'discribe employee_payroll' at line 1
+ MySQL  localhost:3306 ssl  payroll_service  SQL > diecribe employee_payroll;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'diecribe employee_payroll' at line 1
+ MySQL  localhost:3306 ssl  payroll_service  SQL > DESCRIBE employee_payroll;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int unsigned | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(150) | NO   |     | NULL    |                |
+| gender | char(1)      | YES  |     | NULL    |                |
+| salary | double       | NO   |     | NULL    |                |
+| start  | date         | NO   |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+5 rows in set (0.0181 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > UPDATE employee_payroll SET
+SET
+ MySQL  localhost:3306 ssl  payroll_service  SQL > UPDATE employee_payroll SET gender = 'F' WHERE name = 'Jagruti';
+Query OK, 1 row affected (0.0100 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT * FROM employee_payroll;
++----+----------+--------+---------+------------+
+| id | name     | gender | salary  | start      |
++----+----------+--------+---------+------------+
+|  1 | Sharad   | NULL   | 1000000 | 2018-01-25 |
+|  2 | Hitendra | NULL   | 2000000 | 2019-11-26 |
+|  3 | Jitndra  | NULL   | 3000000 | 2020-06-30 |
+|  4 | jagruti  | F      | 4000000 | 2019-05-15 |
++----+----------+--------+---------+------------+
+4 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > UPDATE employee_payroll SET gender = 'M' WHERE name = 'Hitendra' OR name = 'Sharad' OR name = 'Jitendra';
+Query OK, 2 rows affected (0.0134 sec)
+
+Rows matched: 2  Changed: 2  Warnings: 0
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT * FROM employee_payroll;
++----+----------+--------+---------+------------+
+| id | name     | gender | salary  | start      |
++----+----------+--------+---------+------------+
+|  1 | Sharad   | M      | 1000000 | 2018-01-25 |
+|  2 | Hitendra | M      | 2000000 | 2019-11-26 |
+|  3 | Jitndra  | NULL   | 3000000 | 2020-06-30 |
+|  4 | jagruti  | F      | 4000000 | 2019-05-15 |
++----+----------+--------+---------+------------+
+4 rows in set (0.0069 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > UPDATE employee_payroll SET gender = 'M' WHERE name = 'Jitndra';
+Query OK, 1 row affected (0.0124 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT * FROM employee_payroll;
++----+----------+--------+---------+------------+
+| id | name     | gender | salary  | start      |
++----+----------+--------+---------+------------+
+|  1 | Sharad   | M      | 1000000 | 2018-01-25 |
+|  2 | Hitendra | M      | 2000000 | 2019-11-26 |
+|  3 | Jitndra  | M      | 3000000 | 2020-06-30 |
+|  4 | jagruti  | F      | 4000000 | 2019-05-15 |
++----+----------+--------+---------+------------+
+4 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > UPDATE employee_payroll SET salary =5000000.00 WHERE name = 'Jitndra';
+Query OK, 1 row affected (0.0148 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT * FROM employee_payroll;
++----+----------+--------+---------+------------+
+| id | name     | gender | salary  | start      |
++----+----------+--------+---------+------------+
+|  1 | Sharad   | M      | 1000000 | 2018-01-25 |
+|  2 | Hitendra | M      | 2000000 | 2019-11-26 |
+|  3 | Jitndra  | M      | 5000000 | 2020-06-30 |
+|  4 | jagruti  | F      | 4000000 | 2019-05-15 |
++----+----------+--------+---------+------------+
+4 rows in set (0.0063 sec)
+
+***********************UC-7*******************************************************
+
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT AVG(salary) FROM employee_payroll WHERE gender = 'M' GROUP BY gender;
++--------------------+
+| AVG(salary)        |
++--------------------+
+| 2666666.6666666665 |
++--------------------+
+1 row in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT AVG(salary) FROM employee_payroll WHERE gender = 'M' GROUP BY gender;
++--------------------+
+| AVG(salary)        |
++--------------------+
+| 2666666.6666666665 |
++--------------------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT AVG(salary) FROM employee_payroll WHERE gender = 'M';
++--------------------+
+| AVG(salary)        |
++--------------------+
+| 2666666.6666666665 |
++--------------------+
+1 row in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT AVG(salary) FROM employee_payroll WHERE gender = 'F';
++-------------+
+| AVG(salary) |
++-------------+
+|     4000000 |
++-------------+
+1 row in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT AVG(salary) FROM employee_payroll GROUP BY gender;
++--------------------+
+| AVG(salary)        |
++--------------------+
+| 2666666.6666666665 |
+|            4000000 |
++--------------------+
+2 rows in set (0.0072 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT gender, AVG(salary) FROM employee_payroll GROUP BY gender;
++--------+--------------------+
+| gender | AVG(salary)        |
++--------+--------------------+
+| M      | 2666666.6666666665 |
+| F      |            4000000 |
++--------+--------------------+
+2 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT gender, COUNT(name) FROM employee_payroll GROUP BY gender;
++--------+-------------+
+| gender | COUNT(name) |
++--------+-------------+
+| M      |           3 |
+| F      |           1 |
++--------+-------------+
+2 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL > SELECT gender, SUM(salary) FROM employee_payroll GROUP BY gender;
++--------+-------------+
+| gender | SUM(salary) |
++--------+-------------+
+| M      |     8000000 |
+| F      |     4000000 |
++--------+-------------+
+2 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  payroll_service  SQL >
+ 
+
+
+
