@@ -1,0 +1,343 @@
+ MySQL  localhost:3306 ssl  SQL > CREATE DATABASE AddressBook_service;
+Query OK, 1 row affected (0.0277 sec)
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| addressbook_service |
+| employee           |
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sakila             |
+| student            |
+| sys                |
+| world              |
++--------------------+
+10 rows in set (0.0020 sec)
+
+ MySQL  localhost:3306 ssl  SQL > USE addressbook_service;
+Default schema set to `adressbook_service`.
+Fetching table and column names from `adressbook_service` for auto-completion... Press ^C to stop.
+
+*****************************UC-2***************************************
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > CREATE TABLE address_book
+                                                   -> (
+                                                   -> id INT unsigned NOT NULL AUTO_INCREMENT,
+                                                   -> first_name VARCHAR(150) NOT NULL,
+                                                   -> last_name VARCHAR(150) NOT NULL,
+                                                   -> address VARCHAR(150) NOT NULL,
+                                                   -> city VARCHAR(150) NOT NULL,
+                                                   -> state VARCHAR(150) NOT NULL,
+                                                   -> zip INT NOT NULL,
+                                                   -> phone_number VARCHAR(10) NOT NULL,
+                                                   -> email VARCHAR(150) NOT NULL,
+                                                   -> PRIMARY KEY (id)
+                                                   -> );
+
+ 
+  MySQL  localhost:3306 ssl  addressbook_service  SQL > DESCRIBE address_book;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int unsigned | NO   | PRI | NULL    | auto_increment |
+| first_name   | varchar(150) | NO   |     | NULL    |                |
+| last_name    | varchar(150) | NO   |     | NULL    |                |
+| address      | varchar(150) | NO   |     | NULL    |                |
+| city         | varchar(150) | NO   |     | NULL    |                |
+| state        | varchar(150) | NO   |     | NULL    |                |
+| zip          | int          | NO   |     | NULL    |                |
+| email        | varchar(150) | NO   |     | NULL    |                |
+| phone_number | VARCHAR(10)  | NO   |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.0432 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+
+**************************UC-3*******************************************
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > INSERT INTO address_book (first_name, last_name, address, city, state, zip, email, phone_number) VALUES 
+('Hitendra', 'Mali', 'barkund', 'Dhue', 'Maharashtra', 424005, 'malihitu@gmail.com', 8378902827);
+
+Query OK, 1 row affected (0.0418 sec)
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+---------+------+-------------+--------+--------------------+--------------+
+| id | first_name | last_name | address | city | state       | zip    | email              | phone_number |
++----+------------+-----------+---------+------+-------------+--------+--------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund | Dhue | Maharashtra | 424005 | malihitu@gmail.com | 8378902827   |
++----+------------+-----------+---------+------+-------------+--------+--------------------+--------------+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > INSERT INTO address_book (first_name, last_name, address, city, state, zip, email, phone_number) VALUES
+                                                    -> ('Shubham', 'Sawant', 'Dombvali', 'Mumbail', 'Maharashtra', 220366, 'shubham2gmail.com', '8400401856'),
+                                                    -> ('Rakeh', 'Patil', 'Mahadevpura', 'karnatka', 560048, 'patilrakesh@gmail.com', '7450112369');
+						    -> ('Mayur', 'Amrutkar', 'Satpuda', 'Nashik', 'Maharashtra', 470356, 'mayur@gmail.com', '7355401856'), 
+						    -> ('Chetan', 'Bagul', 'Panavel', 'Mumbai', 'maharashtra', 234748, 'chetanbagul@gmail.com', '8856314722');
+Query OK, 4 rows affected (0.0147 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address     | city     | state       | zip    | email                 | phone_number |
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund     | Dhue     | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali    | Mumbail  | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  4 | Rakeh      | Patil     | Mahadevpura | Banglore | karnatka    | 560048 | patilrakesh@gmail.com | 7450112369   |
+|  5 | Mayur      | Amrutkar  | Satpuda     | Nashik   | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel     | Mumbai   | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+5 rows in set (0.0075 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+***********************************UC-4*******************************************************
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > UPDATE address_book SET phone_number = '7474801396' WHERE first_name= 'Rakeh';
+Query OK, 1 row affected (0.0096 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address     | city     | state       | zip    | email                 | phone_number |
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund     | Dhue     | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali    | Mumbail  | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  4 | Rakeh      | Patil     | Mahadevpura | Banglore | karnatka    | 560048 | patilrakesh@gmail.com | 7474801396   |
+|  5 | Mayur      | Amrutkar  | Satpuda     | Nashik   | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel     | Mumbai   | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+5 rows in set (0.0062 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+***********************************************UC-5*****************************************************************
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > DELETE FROM address_book WHERE first_name = 'Rakeh';
+Query OK, 1 row affected (0.0124 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address  | city    | state       | zip    | email                 | phone_number |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund  | Dhue    | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali | Mumbail | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  5 | Mayur      | Amrutkar  | Satpuda  | Nashik  | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel  | Mumbai  | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+4 rows in set (0.0083 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+*******************************UC-6************************************************
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address     | city     | state       | zip    | email                 | phone_number |
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund     | Dhue     | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali    | Mumbail  | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  4 | Rakeh      | Patil     | Mahadevpura | Banglore | karnatka    | 560048 | patilrakesh@gmail.com | 7474801396   |
+|  5 | Mayur      | Amrutkar  | Satpuda     | Nashik   | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel     | Mumbai   | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+-------------+----------+-------------+--------+-----------------------+--------------+
+5 rows in set (0.0062 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > DELETE FROM address_book WHERE first_name = 'Rakeh';
+Query OK, 1 row affected (0.0124 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address  | city    | state       | zip    | email                 | phone_number |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund  | Dhue    | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali | Mumbail | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  5 | Mayur      | Amrutkar  | Satpuda  | Nashik  | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel  | Mumbai  | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+4 rows in set (0.0083 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT first_name FROM address_book WHERE city = 'Nashik';
++------------+
+| first_name |
++------------+
+| Mayur      |
++------------+
+1 row in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT first_name FROM address_book WHERE state = 'Maharashtra';
++------------+
+| first_name |
++------------+
+| Hitendra   |
+| Shubham    |
+| Mayur      |
+| Chetan     |
++------------+
+4 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+*******************************UC-7**********************************************************
+
+4 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT COUNT(city) FROM address_book;
++-------------+
+| COUNT(city) |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.0384 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT COUNT(state) FROM address_book;
++--------------+
+| COUNT(state) |
++--------------+
+|            4 |
++--------------+
+1 row in set (0.0058 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address  | city    | state       | zip    | email                 | phone_number |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund  | Dhue    | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali | Mumbail | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  5 | Mayur      | Amrutkar  | Satpuda  | Nashik  | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel  | Mumbai  | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+4 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+************************************UC-8**********************************************************
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address  | city    | state       | zip    | email                 | phone_number |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund  | Dhue    | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali | Mumbail | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  5 | Mayur      | Amrutkar  | Satpuda  | Nashik  | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel  | Mumbai  | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+4 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book order by last_name;
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address  | city    | state       | zip    | email                 | phone_number |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+|  5 | Mayur      | Amrutkar  | Satpuda  | Nashik  | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel  | Mumbai  | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
+|  1 | Hitendra   | Mali      | barkund  | Dhue    | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali | Mumbail | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
++----+------------+-----------+----------+---------+-------------+--------+-----------------------+--------------+
+4 rows in set (0.0067 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT city  FROM address_book order by last_name;
++---------+
+| city    |
++---------+
+| Nashik  |
+| Mumbai  |
+| Dhue    |
+| Mumbail |
++---------+
+4 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+**************************************************UC-9***********************************************
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > ALTER TABLE address_book ADD AddressBookName VARCHAR(15)  AFTER city;
+Query OK, 0 rows affected (0.2158 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address  | city    | AddressBookName | state       | zip    | email                 | phone_number |
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund  | Dhue    | NULL            | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali | Mumbail | NULL            | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  5 | Mayur      | Amrutkar  | Satpuda  | Nashik  | NULL            | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel  | Mumbai  | NULL            | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+4 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > DESCRIBE address_boot;
+ERROR: 1146 (42S02): Table 'addressbook_service.address_boot' doesn't exist
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > DESCRIBE TABLE address_boot;
+ERROR: 1146 (42S02): Table 'addressbook_service.address_boot' doesn't exist
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > DESCRIBE TABLE address_booK;
++----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table        | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | address_booK | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    4 |      100 | NULL  |
++----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set (0.0121 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > DESCRIBE  address_booK;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int unsigned | NO   | PRI | NULL    | auto_increment |
+| first_name      | varchar(150) | NO   |     | NULL    |                |
+| last_name       | varchar(150) | NO   |     | NULL    |                |
+| address         | varchar(150) | NO   |     | NULL    |                |
+| city            | varchar(150) | NO   |     | NULL    |                |
+| AddressBookName | varchar(15)  | YES  |     | NULL    |                |
+| state           | varchar(150) | NO   |     | NULL    |                |
+| zip             | int          | NO   |     | NULL    |                |
+| email           | varchar(150) | NO   |     | NULL    |                |
+| phone_number    | varchar(10)  | NO   |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+10 rows in set (0.0182 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+********************************************UC-10***************************************************
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT COUNT(phone_number) FROM address_book;
++---------------------+
+| COUNT(phone_number) |
++---------------------+
+|                   4 |
++---------------------+
+1 row in set (0.0119 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT COUNT(city) FROM address_book WHERE first_name = 'Shubham';
++-------------+
+| COUNT(city) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.0031 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+********************************************UC-11***************************************************
+
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > UPDATE address_book SET AddressBookName = 'Family' WHERE first_name = 'Hitendra';
+Query OK, 1 row affected (0.0118 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address  | city    | AddressBookName | state       | zip    | email                 | phone_number |
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund  | Dhue    | Family          | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali | Mumbail | NULL            | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  5 | Mayur      | Amrutkar  | Satpuda  | Nashik  | NULL            | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel  | Mumbai  | NULL            | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+4 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > UPDATE address_book SET AddressBookName = 'Friend' WHERE first_name = 'Mayur';
+Query OK, 1 row affected (0.0127 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > UPDATE address_book SET AddressBookName = 'Friend' WHERE first_name = 'Chetan';
+Query OK, 1 row affected (0.0140 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > UPDATE address_book SET AddressBookName = 'Friend' WHERE first_name = 'Shubham';
+Query OK, 1 row affected (0.0128 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbook_service  SQL > SELECT * FROM address_book;
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+| id | first_name | last_name | address  | city    | AddressBookName | state       | zip    | email                 | phone_number |
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+|  1 | Hitendra   | Mali      | barkund  | Dhue    | Family          | Maharashtra | 424005 | malihitu@gmail.com    | 8378902827   |
+|  3 | Shubham    | Sawant    | Dombvali | Mumbail | Friend          | Maharashtra | 220366 | shubham2gmail.com     | 8400401856   |
+|  5 | Mayur      | Amrutkar  | Satpuda  | Nashik  | Friend          | Maharashtra | 470356 | mayur@gmail.com       | 7355401856   |
+|  6 | Chetan     | Bagul     | Panavel  | Mumbai  | Friend          | maharashtra | 234748 | chetanbagul@gmail.com | 8856314722   |
++----+------------+-----------+----------+---------+-----------------+-------------+--------+-----------------------+--------------+
+4 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  addressbook_service  SQL >
+
+
+
+
+
+
+
+
+
